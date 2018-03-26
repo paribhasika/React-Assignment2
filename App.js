@@ -1,40 +1,37 @@
 import React, { Component } from 'react';
 import './App.css';
-import Validation from './Validation/Validation';
-import CharComponent from './CharComponent/CharComponent';
+//import Person from './Person/Person';
+import UserOutput from './UserOutput/UserOutput';
+import UserInput from './UserInput/UserInput';
 
 class App extends Component {
-  state = {
-    username: 'admin'
+  state={
+    username:'admin'
   }
-  inputChangeHandler = (event) => {
-    this.setState({
-      username: event.target.value
-    });
-  }
-
-  removeCharContainer = (index) => {
-    const inputText = this.state.username.split('');
-    inputText.splice(index, '1');
-    this.setState({ username: inputText.join('') });
-  }
+ changeUsernameHandler = () =>{
+   this.setState({
+     username:'user'
+   });
+ }
+ modifyUserNameHandler = (event) =>{
+  this.setState({
+    username:event.target.value
+  });
+}
   render() {
-   
-    const char = this.state.username.split('').map((ch, index) => {
-      return <CharComponent
-        character={ch}
-        key={index}
-        clicked={() => this.removeCharContainer(index)}
-      />
-
-    })
+    const btnstyle={
+      color: '#2c2b26',
+      backgroundColor: '#ffe006',
+      borderRadius:'8px',
+      padding:'8px'
+    }
     return (
       <div className="App">
-        <h1>Hi I'm App</h1>
-        <input type='text' onChange={this.inputChangeHandler} value={this.state.username} />
-        <p>{this.state.username}</p>
-        <Validation inputLength={this.state.username.length} />
-        {char}
+       <h1>Hi I'm App</h1>
+       <button style={btnstyle} onClick={this.changeUsernameHandler} >Change</button>
+       <UserOutput userName={this.state.username}/>
+       <UserOutput userName='superadmin'/>
+       <UserInput changed={this.modifyUserNameHandler} val={this.state.username}/>
       </div>
     );
   }
